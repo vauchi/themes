@@ -9,6 +9,7 @@ include:
 stages:
   - lint
   - validate
+  - contract
 
 # Validate JSON syntax (fast gate — catches malformed files before Python)
 lint:json:
@@ -58,3 +59,37 @@ validate-themes-strict:
         - themes.schema.json
         - scripts/validate.py
   allow_failure: false
+
+# Check schema backward compatibility (detects breaking changes vs main)
+check-schema-compat:
+  stage: contract
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: validate-themes
+      optional: true
+  script:
+    - git fetch origin main --depth=1
+    - python3 scripts/check-schema-compat.py --baseline main
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.schema.json
+
+# Validate themes.json against core's parser contract
+check-core-contract:
+  stage: contract
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: lint:json
+      optional: true
+  script:
+    - python3 scripts/check-core-contract.py
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+        - scripts/check-core-contract.py
