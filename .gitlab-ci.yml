@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+include:
+  - project: 'vauchi/scripts'
+    ref: main
+    file: '/ci-templates/reuse.yml'
+
+stages:
+  - lint
+  - validate
+
+# Validate JSON syntax (fast gate — catches malformed files before Python)
+lint:json:
+  stage: lint
+  tags:
+    - self-hosted
+    - node
+  needs: []
+  script:
+    - jq empty themes.json
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+
+validate-themes:
+  stage: validate
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: lint:json
+      optional: true
+  script:
+    - python3 scripts/validate.py
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+        - themes.schema.json
+        - scripts/validate.py
+
+validate-themes-strict:
+  stage: validate
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: lint:json
+      optional: true
+  script:
+    - python3 scripts/validate.py --strict
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+        - themes.schema.json
+        - scripts/validate.py
+  allow_failure: false

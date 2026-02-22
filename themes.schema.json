@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vauchi.app/schemas/themes.schema.json",
+  "title": "Themes",
+  "description": "Theme definitions for Vauchi. Source of truth for all platform themes.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "version", "mode", "colors"],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "description": "Unique lowercase identifier"
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Human-readable display name"
+      },
+      "version": {
+        "type": "string",
+        "description": "Theme version"
+      },
+      "author": {
+        "type": "string",
+        "description": "Theme author"
+      },
+      "license": {
+        "type": "string",
+        "description": "Theme license"
+      },
+      "source": {
+        "type": "string",
+        "format": "uri",
+        "description": "URL to original theme source"
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["dark", "light"],
+        "description": "Theme mode"
+      },
+      "colors": {
+        "type": "object",
+        "required": [
+          "bg-primary",
+          "bg-secondary",
+          "bg-tertiary",
+          "text-primary",
+          "text-secondary",
+          "accent",
+          "accent-dark",
+          "success",
+          "error",
+          "warning",
+          "border"
+        ],
+        "properties": {
+          "bg-primary": { "$ref": "#/$defs/hexColor" },
+          "bg-secondary": { "$ref": "#/$defs/hexColor" },
+          "bg-tertiary": { "$ref": "#/$defs/hexColor" },
+          "text-primary": { "$ref": "#/$defs/hexColor" },
+          "text-secondary": { "$ref": "#/$defs/hexColor" },
+          "accent": { "$ref": "#/$defs/hexColor" },
+          "accent-dark": { "$ref": "#/$defs/hexColor" },
+          "success": { "$ref": "#/$defs/hexColor" },
+          "error": { "$ref": "#/$defs/hexColor" },
+          "warning": { "$ref": "#/$defs/hexColor" },
+          "border": { "$ref": "#/$defs/hexColor" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  },
+  "$defs": {
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "description": "Hex color code"
+    }
+  }
+}
