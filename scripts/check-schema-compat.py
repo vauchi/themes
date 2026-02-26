@@ -3,11 +3,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Check JSON Schema backward compatibility between two versions.
 
-Detects breaking changes by comparing the current schema against a baseline.
-Breaking changes:
+Generic breaking-change detector for any JSON Schema file. Detects:
   - Adding a field to "required" array (existing data missing it will fail)
-  - Removing a field from "properties" (existing data with that field is fine,
-    but producers can no longer include it if additionalProperties=false)
+  - Removing a field from "properties" or "patternProperties"
   - Changing a property's "type" (existing data may not match new type)
   - Adding additionalProperties=false when it was previously true/absent
 
@@ -16,9 +14,12 @@ Non-breaking (safe) changes:
   - Relaxing constraints (minLength decrease, pattern removal)
   - Adding new enum values
 
+Handles both flat object schemas (locales) and array-of-items schemas (themes).
+
 Usage:
     python3 scripts/check-schema-compat.py <old-schema> <new-schema>
     python3 scripts/check-schema-compat.py --baseline main
+    python3 scripts/check-schema-compat.py --baseline main --schema my.schema.json
 """
 
 import argparse
@@ -38,7 +39,9 @@ def get_baseline_schema(branch: str, schema_path: str) -> dict | None:
     try:
         result = subprocess.run(
             ["git", "show", f"{branch}:{schema_path}"],
-            capture_output=True, text=True, check=True,
+            capture_output=True,
+            text=True,
+            check=True,
         )
         return json.loads(result.stdout)
     except (subprocess.CalledProcessError, json.JSONDecodeError):
@@ -46,7 +49,11 @@ def get_baseline_schema(branch: str, schema_path: str) -> dict | None:
 
 
 def extract_item_schema(schema: dict) -> dict:
-    """Extract the items schema from an array schema."""
+    """Extract the items schema from an array schema.
+
+    For array schemas (e.g. themes), the interesting properties live
+    under "items". For object schemas (e.g. locales), return as-is.
+    """
     if schema.get("type") == "array" and "items" in schema:
         return schema["items"]
     return schema
@@ -57,11 +64,15 @@ def compare_required(old_req: list, new_req: list) -> list[str]:
     errors = []
     added = set(new_req) - set(old_req)
     for field in sorted(added):
-        errors.append(f"BREAKING: Field '{field}' added to required (existing data may lack it)")
+        errors.append(
+            f"BREAKING: Field '{field}' added to required (existing data may lack it)"
+        )
     return errors
 
 
-def compare_properties(old_props: dict, new_props: dict, path: str = "") -> list[str]:
+def compare_properties(
+    old_props: dict, new_props: dict, path: str = ""
+) -> list[str]:
     """Detect removed or type-changed properties."""
     errors = []
 
@@ -79,10 +90,14 @@ def compare_properties(old_props: dict, new_props: dict, path: str = "") -> list
             )
 
         # Recurse into nested objects
-        if old_props[name].get("type") == "object" and new_props[name].get("type") == "object":
+        if old_props[name].get("type") == "object" and new_props[name].get(
+            "type"
+        ) == "object":
             old_nested = old_props[name].get("properties", {})
             new_nested = new_props[name].get("properties", {})
-            errors.extend(compare_properties(old_nested, new_nested, f"{path}{name}."))
+            errors.extend(
+                compare_properties(old_nested, new_nested, f"{path}{name}.")
+            )
 
             old_nested_req = old_props[name].get("required", [])
             new_nested_req = new_props[name].get("required", [])
@@ -91,7 +106,9 @@ def compare_properties(old_props: dict, new_props: dict, path: str = "") -> list
     return errors
 
 
-def compare_additional_properties(old_schema: dict, new_schema: dict, path: str = "") -> list[str]:
+def compare_additional_properties(
+    old_schema: dict, new_schema: dict, path: str = ""
+) -> list[str]:
     """Detect additionalProperties becoming more restrictive."""
     errors = []
     old_ap = old_schema.get("additionalProperties", True)
@@ -105,32 +122,60 @@ def compare_additional_properties(old_schema: dict, new_schema: dict, path: str 
     return errors
 
 
-def check_compat(old_schema: dict, new_schema: dict) -> tuple[list[str], list[str]]:
-    """Compare two schemas and return (breaking_changes, warnings)."""
+def compare_pattern_properties(old_pp: dict, new_pp: dict) -> list[str]:
+    """Detect removed or type-changed pattern properties."""
+    errors = []
+    for pattern in sorted(set(old_pp) - set(new_pp)):
+        errors.append(f"BREAKING: patternProperty '{pattern}' removed")
+
+    for pattern in sorted(set(old_pp) & set(new_pp)):
+        old_type = old_pp[pattern].get("type")
+        new_type = new_pp[pattern].get("type")
+        if old_type and new_type and old_type != new_type:
+            errors.append(
+                f"BREAKING: patternProperty '{pattern}' type changed: {old_type} -> {new_type}"
+            )
+    return errors
+
+
+def check_compat(
+    old_schema: dict, new_schema: dict
+) -> tuple[list[str], list[str]]:
+    """Compare two schemas and return (breaking_changes, warnings).
+
+    Handles both flat object schemas and array-of-items schemas.
+    """
     breaking = []
     warnings = []
 
-    old_items = extract_item_schema(old_schema)
-    new_items = extract_item_schema(new_schema)
+    old_effective = extract_item_schema(old_schema)
+    new_effective = extract_item_schema(new_schema)
 
     # Compare required fields
-    old_req = old_items.get("required", [])
-    new_req = new_items.get("required", [])
+    old_req = old_effective.get("required", [])
+    new_req = new_effective.get("required", [])
     breaking.extend(compare_required(old_req, new_req))
 
     # Compare properties
-    old_props = old_items.get("properties", {})
-    new_props = new_items.get("properties", {})
+    old_props = old_effective.get("properties", {})
+    new_props = new_effective.get("properties", {})
     breaking.extend(compare_properties(old_props, new_props))
 
     # Check additionalProperties
-    breaking.extend(compare_additional_properties(old_items, new_items))
+    breaking.extend(compare_additional_properties(old_effective, new_effective))
 
-    # Check nested objects (e.g., colors)
+    # Compare patternProperties
+    old_pp = old_effective.get("patternProperties", {})
+    new_pp = new_effective.get("patternProperties", {})
+    breaking.extend(compare_pattern_properties(old_pp, new_pp))
+
+    # Check nested objects
     for name in set(old_props) & set(new_props):
         if old_props[name].get("type") == "object":
             breaking.extend(
-                compare_additional_properties(old_props[name], new_props[name], f"{name}.")
+                compare_additional_properties(
+                    old_props[name], new_props[name], f"{name}."
+                )
             )
 
     # Non-breaking: new optional properties
@@ -147,15 +192,45 @@ def check_compat(old_schema: dict, new_schema: dict) -> tuple[list[str], list[st
     return breaking, warnings
 
 
+def auto_detect_schema(repo_root: Path) -> str | None:
+    """Auto-detect the schema file in the repo root."""
+    candidates = list(repo_root.glob("*.schema.json"))
+    if len(candidates) == 1:
+        return candidates[0].name
+    return None
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check JSON Schema backward compatibility")
+    parser = argparse.ArgumentParser(
+        description="Check JSON Schema backward compatibility"
+    )
     parser.add_argument("old_schema", nargs="?", help="Path to old (baseline) schema")
     parser.add_argument("new_schema", nargs="?", help="Path to new schema")
-    parser.add_argument("--baseline", default=None, help="Git branch to use as baseline (e.g., 'main')")
+    parser.add_argument(
+        "--baseline",
+        default=None,
+        help="Git branch to use as baseline (e.g., 'main')",
+    )
+    parser.add_argument(
+        "--schema",
+        default=None,
+        help="Schema filename relative to repo root (auto-detected if omitted)",
+    )
     args = parser.parse_args()
 
     repo_root = Path(__file__).parent.parent
-    schema_rel = "themes.schema.json"
+
+    # Determine schema filename
+    if args.schema:
+        schema_rel = args.schema
+    else:
+        detected = auto_detect_schema(repo_root)
+        if detected:
+            schema_rel = detected
+        else:
+            print("ERROR: Cannot auto-detect schema file. Use --schema <filename>.")
+            return 1
+
     new_schema_path = repo_root / schema_rel
 
     if args.baseline:
@@ -163,7 +238,9 @@ def main() -> int:
         if old_schema is None:
             old_schema = get_baseline_schema(args.baseline, schema_rel)
         if old_schema is None:
-            print(f"No baseline schema found on branch '{args.baseline}' — skipping compat check")
+            print(
+                f"No baseline schema found on branch '{args.baseline}' — skipping compat check"
+            )
             return 0
         new_schema = load_json(str(new_schema_path))
     elif args.old_schema and args.new_schema:
@@ -183,7 +260,9 @@ def main() -> int:
         for b in breaking:
             print(f"  {b}")
         print("\nThese changes will break existing content consumers.")
-        print("If intentional, update min_app_version in manifest and coordinate with core.")
+        print(
+            "If intentional, update min_app_version in manifest and coordinate with core."
+        )
         return 1
 
     print(f"\nSchema is backward compatible. ({len(warnings)} info note(s))")
