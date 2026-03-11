@@ -260,5 +260,47 @@
       "warning": "#d79921",
       "border": "#d5c4a1"
     }
+  },
+  {
+    "id": "high-contrast",
+    "name": "High Contrast",
+    "version": "1.0.0",
+    "author": "Vauchi",
+    "license": "GPL-3.0-or-later",
+    "mode": "dark",
+    "colors": {
+      "bg-primary": "#000000",
+      "bg-secondary": "#0a0a0a",
+      "bg-tertiary": "#1a1a1a",
+      "text-primary": "#ffffff",
+      "text-secondary": "#e0e0e0",
+      "accent": "#ffff00",
+      "accent-dark": "#00ffff",
+      "success": "#00ff00",
+      "error": "#ff0000",
+      "warning": "#ffff00",
+      "border": "#ffffff"
+    }
+  },
+  {
+    "id": "high-contrast-light",
+    "name": "High Contrast Light",
+    "version": "1.0.0",
+    "author": "Vauchi",
+    "license": "GPL-3.0-or-later",
+    "mode": "light",
+    "colors": {
+      "bg-primary": "#ffffff",
+      "bg-secondary": "#f0f0f0",
+      "bg-tertiary": "#e0e0e0",
+      "text-primary": "#000000",
+      "text-secondary": "#1a1a1a",
+      "accent": "#0000cc",
+      "accent-dark": "#000099",
+      "success": "#006600",
+      "error": "#cc0000",
+      "warning": "#996600",
+      "border": "#000000"
+    }
   }
 ]
