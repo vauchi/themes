@@ -1,6 +1,8 @@
 <!-- SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me> -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 
+[![REUSE](https://api.reuse.software/badge/gitlab.com/vauchi/themes)](https://api.reuse.software/info/gitlab.com/vauchi/themes)
+
 # Vauchi Themes
 
 Theme definitions for [Vauchi](https://vauchi.com) — privacy-focused updatable contact cards.

@@ -4,12 +4,15 @@
 include:
   - project: 'vauchi/scripts'
     ref: main
-    file: '/ci-templates/reuse.yml'
+    file:
+      - '/ci-templates/reuse.yml'
+      - '/ci-templates/badges.yml'
 
 stages:
   - lint
   - validate
   - contract
+  - deploy
 
 # Validate JSON syntax (fast gate — catches malformed files before Python)
 lint:json:
@@ -93,3 +96,10 @@ check-core-contract:
       changes:
         - themes.json
         - scripts/check-core-contract.py
+
+# ============================================================
+# Deploy Stage — Badge Pages
+# ============================================================
+
+pages:
+  extends: .badges-pages
