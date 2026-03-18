@@ -4,3 +4,6 @@
 
 # CI local testing
 .gitlab-ci-local/
+
+# Generated platform outputs (design-token-system Phase 2)
+generated/
