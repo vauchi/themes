@@ -11,6 +11,7 @@ include:
 stages:
   - lint
   - validate
+  - generate
   - contract
   - deploy
 
@@ -63,6 +64,47 @@ validate-themes-strict:
         - scripts/validate.py
   allow_failure: false
 
+# Run generator tests
+test-generator:
+  stage: generate
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: validate-themes
+      optional: true
+  script:
+    - python3 -m unittest scripts.test_generate -v
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+        - tokens.json
+        - scripts/generate.py
+        - scripts/test_generate.py
+
+# Generate platform outputs
+generate-tokens:
+  stage: generate
+  tags:
+    - self-hosted
+    - node
+  needs:
+    - job: validate-themes
+      optional: true
+  script:
+    - python3 scripts/generate.py
+  artifacts:
+    paths:
+      - generated/
+    expire_in: 1 week
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - themes.json
+        - tokens.json
+        - scripts/generate.py
+
 # Check schema backward compatibility (detects breaking changes vs main)
 check-schema-compat:
   stage: contract
@@ -74,7 +116,7 @@ check-schema-compat:
       optional: true
   script:
     - git fetch origin main --depth=1
-    - python3 scripts/check-schema-compat.py --baseline main
+    - python3 scripts/check-schema-compat.py --baseline main --schema themes.schema.json
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:

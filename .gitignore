@@ -5,5 +5,8 @@
 # CI local testing
 .gitlab-ci-local/
 
+# Python bytecode
+__pycache__/
+
 # Generated platform outputs (design-token-system Phase 2)
 generated/

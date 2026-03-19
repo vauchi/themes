@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me>
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Validate themes.json against core's Theme struct contract.
+"""Validate generated themes against core's Theme struct contract.
 
 This script encodes what core's serde parser expects. If core adds a
 required field, this script must be updated — and that update is the
 signal that themes.json needs updating too.
+
+Validates the resolved flat output (generated/themes.json) which is
+what core actually consumes. If generated/ doesn't exist, falls back
+to resolving themes.json directly.
 
 Contract version: 1 (matches core/vauchi-core/src/theme.rs)
 
@@ -98,16 +102,47 @@ def validate_contract(themes: list) -> list[str]:
     return errors
 
 
+def resolve_v2_themes(themes: list) -> list:
+    """Convert v2 hierarchical themes to v1 flat format for contract checking."""
+    import re as _re
+
+    ref_pat = _re.compile(r"^\{([a-zA-Z][a-zA-Z0-9-]*)\}$")
+    flat = []
+    for theme in themes:
+        if "primitives" in theme and "semantic" in theme:
+            colors = {}
+            for key, ref in theme["semantic"].items():
+                m = ref_pat.match(ref)
+                if m and m.group(1) in theme["primitives"]:
+                    colors[key] = theme["primitives"][m.group(1)]
+            entry = {k: v for k, v in theme.items() if k not in ("primitives", "semantic")}
+            entry["colors"] = colors
+            flat.append(entry)
+        else:
+            flat.append(theme)
+    return flat
+
+
 def main() -> int:
     repo_root = Path(__file__).parent.parent
+    generated_path = repo_root / "generated" / "themes.json"
     themes_path = repo_root / "themes.json"
 
-    if not themes_path.exists():
-        print(f"ERROR: {themes_path} not found")
+    # Prefer generated flat output; fall back to resolving source
+    if generated_path.exists():
+        source = generated_path
+        with open(generated_path) as f:
+            themes = json.load(f)
+    elif themes_path.exists():
+        source = themes_path
+        with open(themes_path) as f:
+            raw = json.load(f)
+        themes = resolve_v2_themes(raw)
+    else:
+        print("ERROR: No themes file found")
         return 1
 
-    with open(themes_path) as f:
-        themes = json.load(f)
+    _ = source  # used for messaging below
 
     print(f"Checking {len(themes)} themes against core contract v{CONTRACT_VERSION}")
     print(f"  Required fields: {sorted(REQUIRED_THEME_FIELDS)}")

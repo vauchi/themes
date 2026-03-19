@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://vauchi.app/schemas/themes.schema.json",
   "title": "Themes",
-  "description": "Theme definitions for Vauchi. Source of truth for all platform themes.",
+  "description": "Theme definitions for Vauchi. Hierarchical primitives + semantic format (v2).",
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["id", "name", "version", "mode", "colors"],
+    "required": ["id", "name", "version", "mode", "primitives", "semantic"],
     "properties": {
       "id": {
         "type": "string",
@@ -40,8 +40,15 @@
         "enum": ["dark", "light"],
         "description": "Theme mode"
       },
-      "colors": {
+      "primitives": {
         "type": "object",
+        "description": "Palette-specific color primitives (hex values)",
+        "minProperties": 1,
+        "additionalProperties": { "$ref": "#/$defs/hexColor" }
+      },
+      "semantic": {
+        "type": "object",
+        "description": "Semantic color roles referencing primitives via {name}",
         "required": [
           "bg-primary",
           "bg-secondary",
@@ -56,19 +63,19 @@
           "border"
         ],
         "properties": {
-          "bg-primary": { "$ref": "#/$defs/hexColor" },
-          "bg-secondary": { "$ref": "#/$defs/hexColor" },
-          "bg-tertiary": { "$ref": "#/$defs/hexColor" },
-          "text-primary": { "$ref": "#/$defs/hexColor" },
-          "text-secondary": { "$ref": "#/$defs/hexColor" },
-          "accent": { "$ref": "#/$defs/hexColor" },
-          "accent-dark": { "$ref": "#/$defs/hexColor" },
-          "success": { "$ref": "#/$defs/hexColor" },
-          "error": { "$ref": "#/$defs/hexColor" },
-          "warning": { "$ref": "#/$defs/hexColor" },
-          "border": { "$ref": "#/$defs/hexColor" }
+          "bg-primary": { "$ref": "#/$defs/colorRef" },
+          "bg-secondary": { "$ref": "#/$defs/colorRef" },
+          "bg-tertiary": { "$ref": "#/$defs/colorRef" },
+          "text-primary": { "$ref": "#/$defs/colorRef" },
+          "text-secondary": { "$ref": "#/$defs/colorRef" },
+          "accent": { "$ref": "#/$defs/colorRef" },
+          "accent-dark": { "$ref": "#/$defs/colorRef" },
+          "success": { "$ref": "#/$defs/colorRef" },
+          "error": { "$ref": "#/$defs/colorRef" },
+          "warning": { "$ref": "#/$defs/colorRef" },
+          "border": { "$ref": "#/$defs/colorRef" }
         },
-        "additionalProperties": false
+        "additionalProperties": { "$ref": "#/$defs/colorRef" }
       }
     },
     "additionalProperties": false
@@ -78,6 +85,11 @@
       "type": "string",
       "pattern": "^#[0-9a-fA-F]{6}$",
       "description": "Hex color code"
+    },
+    "colorRef": {
+      "type": "string",
+      "pattern": "^\\{[a-zA-Z][a-zA-Z0-9-]*\\}$",
+      "description": "Reference to a primitive color via {name}"
     }
   }
 }

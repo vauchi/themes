@@ -10,6 +10,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,6 +18,24 @@ try:
     import jsonschema
 except ImportError:
     jsonschema = None
+
+REF_PATTERN = re.compile(r"^\{([a-zA-Z][a-zA-Z0-9-]*)\}$")
+
+
+def resolve_semantic(theme: dict) -> dict[str, str]:
+    """Resolve semantic refs to hex values via primitives. Returns flat color dict."""
+    primitives = theme["primitives"]
+    semantic = theme["semantic"]
+    resolved = {}
+    for key, ref in semantic.items():
+        m = REF_PATTERN.match(ref)
+        if not m:
+            raise ValueError(f"[{theme['id']}] Invalid reference format: {ref}")
+        prim_name = m.group(1)
+        if prim_name not in primitives:
+            raise ValueError(f"[{theme['id']}] Missing primitive '{prim_name}' referenced by semantic.{key}")
+        resolved[key] = primitives[prim_name]
+    return resolved
 
 
 def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
@@ -72,12 +91,35 @@ def validate_unique_ids(themes: list) -> list[str]:
     return errors
 
 
-def validate_contrast(themes: list, strict: bool = False) -> list[str]:
-    """Check WCAG AA contrast requirements."""
+def validate_refs(themes: list) -> list[str]:
+    """Validate that all semantic refs point to existing primitives."""
     errors = []
     for theme in themes:
         tid = theme["id"]
-        colors = theme["colors"]
+        primitives = theme.get("primitives", {})
+        semantic = theme.get("semantic", {})
+        for key, ref in semantic.items():
+            m = REF_PATTERN.match(ref)
+            if not m:
+                errors.append(f"[{tid}] semantic.{key}: invalid reference format '{ref}'")
+                continue
+            prim_name = m.group(1)
+            if prim_name not in primitives:
+                errors.append(f"[{tid}] semantic.{key}: references missing primitive '{prim_name}'")
+    return errors
+
+
+def validate_contrast(themes: list, strict: bool = False) -> list[str]:
+    """Check WCAG AA contrast requirements using resolved colors."""
+    errors = []
+    for theme in themes:
+        tid = theme["id"]
+        try:
+            colors = resolve_semantic(theme)
+        except ValueError as e:
+            errors.append(str(e))
+            continue
+
         bg = colors["bg-primary"]
 
         # WCAG AA: text-primary on bg-primary >= 4.5:1
@@ -138,6 +180,9 @@ def main() -> int:
 
     # Unique IDs
     all_errors.extend(validate_unique_ids(themes))
+
+    # Reference validity
+    all_errors.extend(validate_refs(themes))
 
     # WCAG contrast
     all_errors.extend(validate_contrast(themes, strict=args.strict))
