@@ -1,0 +1,89 @@
+{
+  "_spdx": "SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me>; SPDX-License-Identifier: GPL-3.0-or-later",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vauchi.app/schemas/tokens.schema.json",
+  "title": "Vauchi Design Tokens",
+  "description": "Theme-invariant design tokens for consistent cross-platform rendering.",
+  "type": "object",
+  "required": ["version", "spacing", "typography", "border_radius"],
+  "additionalProperties": false,
+  "properties": {
+    "_spdx": {
+      "type": "string",
+      "description": "SPDX license and copyright header."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the token schema."
+    },
+    "spacing": {
+      "type": "object",
+      "description": "Spacing scale for margins, padding, and gaps.",
+      "required": ["xs", "sm", "md", "lg", "xl"],
+      "additionalProperties": false,
+      "properties": {
+        "xs": { "type": "integer", "minimum": 0 },
+        "sm": { "type": "integer", "minimum": 0 },
+        "md": { "type": "integer", "minimum": 0 },
+        "lg": { "type": "integer", "minimum": 0 },
+        "xl": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "spacing_direction": {
+      "type": "object",
+      "description": "Directional spacing for content and list items.",
+      "required": ["content_start", "content_end", "list_item_start", "list_item_end"],
+      "additionalProperties": false,
+      "properties": {
+        "content_start": { "type": "integer", "minimum": 0 },
+        "content_end": { "type": "integer", "minimum": 0 },
+        "list_item_start": { "type": "integer", "minimum": 0 },
+        "list_item_end": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "typography": {
+      "type": "object",
+      "description": "Font size tokens for text hierarchy.",
+      "required": ["title_size", "subtitle_size", "body_size", "caption_size"],
+      "additionalProperties": false,
+      "properties": {
+        "title_size": { "type": "integer", "minimum": 1 },
+        "subtitle_size": { "type": "integer", "minimum": 1 },
+        "body_size": { "type": "integer", "minimum": 1 },
+        "caption_size": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "border_radius": {
+      "type": "object",
+      "description": "Border radius tokens for rounded corners.",
+      "required": ["sm", "md", "lg"],
+      "additionalProperties": false,
+      "properties": {
+        "sm": { "type": "integer", "minimum": 0 },
+        "md": { "type": "integer", "minimum": 0 },
+        "lg": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "touch_target": {
+      "type": "object",
+      "description": "Minimum touch target sizes (WCAG 2.5.8).",
+      "required": ["minimum"],
+      "additionalProperties": false,
+      "properties": {
+        "minimum": { "type": "integer", "minimum": 24 }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "description": "Animation duration tokens in milliseconds.",
+      "required": ["enter_duration_ms", "exit_duration_ms", "emphasis_duration_ms"],
+      "additionalProperties": false,
+      "properties": {
+        "enter_duration_ms": { "type": "integer", "minimum": 0 },
+        "exit_duration_ms": { "type": "integer", "minimum": 0 },
+        "emphasis_duration_ms": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}
