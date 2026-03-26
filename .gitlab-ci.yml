@@ -30,7 +30,7 @@ lint:json:
       changes:
         - themes.json
 
-validate-themes:
+validate:themes:
   stage: validate
   tags:
     - self-hosted
@@ -47,7 +47,7 @@ validate-themes:
         - themes.schema.json
         - scripts/validate.py
 
-validate-themes-strict:
+validate:themes-strict:
   stage: validate
   tags:
     - self-hosted
@@ -66,13 +66,13 @@ validate-themes-strict:
   allow_failure: false
 
 # Run generator tests
-test-generator:
+test:generator:
   stage: generate
   tags:
     - self-hosted
     - node
   needs:
-    - job: validate-themes
+    - job: validate:themes
       optional: true
   script:
     - python3 -m unittest scripts.test_generate -v
@@ -85,13 +85,13 @@ test-generator:
         - scripts/test_generate.py
 
 # Generate platform outputs
-generate-tokens:
+generate:tokens:
   stage: generate
   tags:
     - self-hosted
     - node
   needs:
-    - job: validate-themes
+    - job: validate:themes
       optional: true
   script:
     - python3 scripts/generate.py
@@ -107,13 +107,13 @@ generate-tokens:
         - scripts/generate.py
 
 # Check schema backward compatibility (detects breaking changes vs main)
-check-schema-compat:
+check:schema-compat:
   stage: contract
   tags:
     - self-hosted
     - node
   needs:
-    - job: validate-themes
+    - job: validate:themes
       optional: true
   allow_failure: true  # Breaking changes are expected during L2a schema migration
   script:
@@ -125,7 +125,7 @@ check-schema-compat:
         - themes.schema.json
 
 # Validate themes.json against core's parser contract
-check-core-contract:
+check:core-contract:
   stage: contract
   tags:
     - self-hosted
