@@ -7,6 +7,7 @@ include:
     file:
       - '/ci-templates/reuse.yml'
       - '/ci-templates/badges.yml'
+      - '/ci-templates/github-mirror.yml'
 
 stages:
   - lint
@@ -146,3 +147,6 @@ check-core-contract:
 
 pages:
   extends: .badges-pages
+
+github-mirror:
+  extends: .github-mirror
