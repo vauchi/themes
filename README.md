@@ -1,6 +1,8 @@
 <!-- SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me> -->
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 
+> **Mirror:** This repo is a read-only mirror of [gitlab.com/vauchi/themes](https://gitlab.com/vauchi/themes). Please open issues and merge requests there.
+
 [![Pipeline](https://vauchi.gitlab.io/themes/badges/pipeline.svg)](https://gitlab.com/vauchi/themes/-/pipelines)
 [![REUSE](https://api.reuse.software/badge/gitlab.com/vauchi/themes)](https://api.reuse.software/info/gitlab.com/vauchi/themes)
 
