@@ -194,20 +194,20 @@ class TestGenerateFlatThemes(unittest.TestCase):
     """Test backward-compatible flat theme generation."""
 
     def test_flat_output_has_colors_key(self):
-        flat = generate_flat_themes([SAMPLE_THEME])
+        flat = generate_flat_themes([SAMPLE_THEME], {"version": "2.0.0"})
         self.assertEqual(len(flat), 1)
         self.assertIn("colors", flat[0])
         self.assertNotIn("primitives", flat[0])
         self.assertNotIn("semantic", flat[0])
 
     def test_flat_preserves_metadata(self):
-        flat = generate_flat_themes([SAMPLE_THEME])
+        flat = generate_flat_themes([SAMPLE_THEME], {"version": "2.0.0"})
         self.assertEqual(flat[0]["id"], "test-theme")
         self.assertEqual(flat[0]["name"], "Test")
         self.assertEqual(flat[0]["mode"], "dark")
 
     def test_flat_colors_are_hex(self):
-        flat = generate_flat_themes([SAMPLE_THEME])
+        flat = generate_flat_themes([SAMPLE_THEME], {"version": "2.0.0"})
         for val in flat[0]["colors"].values():
             self.assertTrue(val.startswith("#"), f"Expected hex, got {val}")
             self.assertEqual(len(val), 7, f"Expected 7-char hex, got {val}")
@@ -310,7 +310,7 @@ class TestEndToEnd(unittest.TestCase):
             out_dir = Path(tmpdir)
 
             # Generate flat themes
-            flat = generate_flat_themes(themes)
+            flat = generate_flat_themes(themes, tokens)
             flat_path = out_dir / "themes.json"
             with open(flat_path, "w") as f:
                 json.dump(flat, f, indent=2)
