@@ -14,6 +14,7 @@ stages:
   - validate
   - generate
   - contract
+  - trigger
   - deploy
 
 # Validate JSON syntax (fast gate — catches malformed files before Python)
@@ -140,6 +141,29 @@ check:core-contract:
       changes:
         - themes.json
         - scripts/check-core-contract.py
+
+# ============================================================
+# Trigger Stage — Cross-Project Contract Validation (C4)
+# ============================================================
+
+# When themes.json merges to main, trigger core's contract tests
+# to verify core's parser still accepts the new content.
+trigger:core-validate:
+  stage: trigger
+  needs:
+    - job: validate:themes-strict
+      optional: true
+  trigger:
+    project: vauchi/core
+    strategy: depend
+  variables:
+    CONTENT_TRIGGER_REPO: themes
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - themes.json
+        - tokens.json
+        - themes.schema.json
 
 # ============================================================
 # Deploy Stage — Badge Pages
