@@ -48,29 +48,40 @@ REQUIRED_COLOR_TOKENS = {
 HEX_COLOR_PATTERN = r"^#[0-9a-fA-F]{6}$"
 
 # === DESIGN TOKEN CONTRACT ===
-# These mirror core/vauchi-app/src/theme.rs DesignTokens::default().
-# Update this when core's DesignTokens, SpacingTokens, TypographyTokens,
-# or BorderRadiusTokens struct or defaults change.
-#
-# Categories present in tokens.json but NOT yet in Rust are listed in
-# KNOWN_UNMIRRORED_CATEGORIES — they are validated for structure but
-# not for value parity with Rust.
+# These mirror core/vauchi-app/src/theme.rs DesignTokens::default()
+# (which is generated from tokens.json by generate.py).
+# This contract check is the secondary safety net — the generated
+# Rust Default impl is the primary mechanism that keeps values in sync.
+# Update this when new token categories are added to tokens.json.
 
 RUST_DESIGN_TOKEN_DEFAULTS = {
     "spacing": {"xs": 4, "sm": 8, "md": 16, "lg": 24, "xl": 32},
+    "spacing_direction": {
+        "content_start": 16,
+        "content_end": 16,
+        "list_item_start": 8,
+        "list_item_end": 8,
+        "list_item_inline_start": 12,
+        "list_item_inline_end": 12,
+    },
     "typography": {
         "title_size": 24,
         "subtitle_size": 18,
         "body_size": 16,
         "caption_size": 14,
     },
-    "border_radius": {"sm": 4, "md": 8, "lg": 16},
+    "border_radius": {"sm": 4, "md": 8, "md_lg": 12, "lg": 16},
+    "touch_target": {"minimum": 44},
+    "motion": {
+        "enter_duration_ms": 200,
+        "exit_duration_ms": 150,
+        "emphasis_duration_ms": 300,
+    },
 }
 
-# Token categories in tokens.json that exist in CSS/ANSI but not in Rust.
-# Tracked as ADR-038 known gap (F-06). When added to Rust, move to
-# RUST_DESIGN_TOKEN_DEFAULTS and update DesignTokens::default().
-KNOWN_UNMIRRORED_CATEGORIES = {"spacing_direction", "touch_target", "motion"}
+# Token categories in tokens.json that exist in CSS/ANSI but not yet in Rust.
+# When added to Rust, move to RUST_DESIGN_TOKEN_DEFAULTS.
+KNOWN_UNMIRRORED_CATEGORIES: set[str] = set()
 
 # Non-token metadata keys in tokens.json (not validated as tokens).
 TOKEN_METADATA_KEYS = {"_spdx", "version"}
@@ -230,7 +241,8 @@ def main() -> int:
         unmirrored = len(KNOWN_UNMIRRORED_CATEGORIES)
         print(f"\nChecking tokens.json against Rust DesignTokens::default()")
         print(f"  Mirrored in Rust: {mirrored} categories")
-        print(f"  Not yet in Rust:  {unmirrored} categories (tracked as ADR-038 gap)")
+        if unmirrored:
+            print(f"  Not yet in Rust:  {unmirrored} categories (tracked as ADR-038 gap)")
 
         all_errors.extend(validate_token_contract(tokens))
     else:
