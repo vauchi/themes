@@ -147,6 +147,26 @@ def validate_contrast(themes: list, strict: bool = False) -> list[str]:
                     f"contrast {ratio_acc:.2f}:1 < 3.0:1 (visibility fail)"
                 )
 
+            # ADR-038 Amendment 1 extensions (known-optional — checked on
+            # bg-primary when the theme defines them). text-label is body
+            # text (AA 4.5:1); text-muted is incidental, accent-bright and
+            # icon-accent are UI/icon roles (3:1).
+            ext_checks = [
+                ("text-label", 4.5, "WCAG AA fail"),
+                ("text-muted", 3.0, "UI/incidental fail"),
+                ("accent-bright", 3.0, "UI fail"),
+                ("icon-accent", 3.0, "UI fail"),
+            ]
+            for token, threshold, label in ext_checks:
+                if token in colors:
+                    ratio_ext = contrast_ratio(colors[token], bg)
+                    if ratio_ext < threshold:
+                        errors.append(
+                            f"[{tid}] {token} ({colors[token]}) on bg-primary "
+                            f"({bg}): contrast {ratio_ext:.2f}:1 < {threshold}:1 "
+                            f"({label})"
+                        )
+
     return errors
 
 
