@@ -45,7 +45,32 @@ REQUIRED_COLOR_TOKENS = {
     "border",
 }
 
-HEX_COLOR_PATTERN = r"^#[0-9a-fA-F]{6}$"
+# ADR-038 Amendment 1: 17 known-optional extensions (two-tier contract).
+# CI rejects UNKNOWN keys (typos) but a theme may omit any of these and
+# fall back; they are not required of every theme.
+KNOWN_OPTIONAL_COLOR_TOKENS = {
+    "surface",
+    "surface-input",
+    "surface-muted",
+    "surface-elevated",
+    "bottombar-bg",
+    "text-label",
+    "text-muted",
+    "accent-bright",
+    "icon-accent",
+    "teal",
+    "tint-accent",
+    "tint-selected",
+    "tint-teal",
+    "tint-orange",
+    "tint-danger",
+    "tint-green",
+    "scrim",
+}
+
+# 6-digit hex; 8-digit (#rrggbbaa) allowed for alpha tokens (scrim) per
+# ADR-038 Amendment 1.
+HEX_COLOR_PATTERN = r"^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
 
 # === DESIGN TOKEN CONTRACT ===
 # These mirror core/vauchi-app/src/theme.rs DesignTokens::default()
@@ -169,24 +194,26 @@ def validate_contract(themes: list) -> list[str]:
                 if token not in colors:
                     errors.append(f"{prefix} Missing color token: {token}")
 
-            # Check color format
+            # Check color format (required + known-optional tokens)
+            contract_tokens = REQUIRED_COLOR_TOKENS | KNOWN_OPTIONAL_COLOR_TOKENS
             for token, value in colors.items():
-                if token in REQUIRED_COLOR_TOKENS and not re.match(HEX_COLOR_PATTERN, str(value)):
+                if token in contract_tokens and not re.match(HEX_COLOR_PATTERN, str(value)):
                     errors.append(f"{prefix} Invalid hex color for {token}: {value}")
 
-            # Reject tokens outside the contract allow-list. The JSON schema
-            # itself PERMITS extra semantic colors (the semantic node sets
+            # Reject tokens outside the contract. The JSON schema itself
+            # PERMITS extra semantic colors (the semantic node sets
             # additionalProperties: colorRef in themes.schema.json); this
-            # checker is deliberately stricter because core deserializes into a
-            # FIXED struct (theme.rs ThemeColors), so any token not in the
-            # contract is silently dropped on load rather than reaching
-            # consumers — the allow-list, not the schema, is the real gate.
-            unknown_tokens = set(colors.keys()) - REQUIRED_COLOR_TOKENS
+            # checker is deliberately stricter because core deserializes into
+            # FIXED structs (theme.rs ThemeColors + the known-optional set are
+            # Option fields), so any token in neither tier is silently dropped
+            # on load rather than reaching consumers — the allow-list, not the
+            # schema, is the real gate (ADR-038 Amendment 1).
+            unknown_tokens = set(colors.keys()) - contract_tokens
             if unknown_tokens:
                 errors.append(
                     f"{prefix} Color tokens outside the contract: {unknown_tokens} "
-                    f"(not in REQUIRED_COLOR_TOKENS; core's fixed ThemeColors "
-                    f"struct would silently drop them)"
+                    f"(not in REQUIRED_COLOR_TOKENS or KNOWN_OPTIONAL_COLOR_TOKENS; "
+                    f"core would silently drop them)"
                 )
 
     return errors

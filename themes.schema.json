@@ -83,8 +83,8 @@
   "$defs": {
     "hexColor": {
       "type": "string",
-      "pattern": "^#[0-9a-fA-F]{6}$",
-      "description": "Hex color code"
+      "pattern": "^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$",
+      "description": "Hex color code (#rrggbb, or #rrggbbaa for alpha tokens like scrim — ADR-038 Amendment 1)"
     },
     "colorRef": {
       "type": "string",
