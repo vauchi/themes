@@ -174,12 +174,19 @@ def validate_contract(themes: list) -> list[str]:
                 if token in REQUIRED_COLOR_TOKENS and not re.match(HEX_COLOR_PATTERN, str(value)):
                     errors.append(f"{prefix} Invalid hex color for {token}: {value}")
 
-            # Check for unknown tokens (additionalProperties: false in schema)
+            # Reject tokens outside the contract allow-list. The JSON schema
+            # itself PERMITS extra semantic colors (the semantic node sets
+            # additionalProperties: colorRef in themes.schema.json); this
+            # checker is deliberately stricter because core deserializes into a
+            # FIXED struct (theme.rs ThemeColors), so any token not in the
+            # contract is silently dropped on load rather than reaching
+            # consumers — the allow-list, not the schema, is the real gate.
             unknown_tokens = set(colors.keys()) - REQUIRED_COLOR_TOKENS
             if unknown_tokens:
                 errors.append(
-                    f"{prefix} Unknown color tokens: {unknown_tokens} "
-                    f"(schema has additionalProperties: false)"
+                    f"{prefix} Color tokens outside the contract: {unknown_tokens} "
+                    f"(not in REQUIRED_COLOR_TOKENS; core's fixed ThemeColors "
+                    f"struct would silently drop them)"
                 )
 
     return errors
