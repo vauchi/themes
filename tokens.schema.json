@@ -98,6 +98,37 @@
         "exit_duration_ms": { "type": "integer", "minimum": 0 },
         "emphasis_duration_ms": { "type": "integer", "minimum": 0 }
       }
+    },
+    "font_family": {
+      "type": "object",
+      "description": "Font family names (bundled SIL-OFL webfonts).",
+      "additionalProperties": false,
+      "properties": {
+        "display": { "type": "string" },
+        "body": { "type": "string" },
+        "mono": { "type": "string" }
+      }
+    },
+    "font_weight": {
+      "type": "object",
+      "description": "Font weight ramp.",
+      "additionalProperties": false,
+      "properties": {
+        "regular": { "type": "integer", "minimum": 1 },
+        "medium": { "type": "integer", "minimum": 1 },
+        "semibold": { "type": "integer", "minimum": 1 },
+        "bold": { "type": "integer", "minimum": 1 },
+        "extrabold": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "focus": {
+      "type": "object",
+      "description": "Focus-visible ring metrics (ring colour is a semantic token).",
+      "additionalProperties": false,
+      "properties": {
+        "ring_width": { "type": "integer", "minimum": 0 },
+        "ring_offset": { "type": "integer", "minimum": 0 }
+      }
     }
   }
 }

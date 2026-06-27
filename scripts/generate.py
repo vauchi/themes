@@ -194,6 +194,19 @@ def generate_css(tokens: dict, themes: list[dict]) -> str:
             css_key = key.replace("_", "-").replace("-ms", "")
             lines.append(f"  --motion-{css_key}: {val}ms;")
 
+    if "font_family" in tokens:
+        for key, val in tokens["font_family"].items():
+            lines.append(f'  --font-family-{key}: "{val}";')
+
+    if "font_weight" in tokens:
+        for key, val in tokens["font_weight"].items():
+            lines.append(f"  --font-weight-{key}: {val};")
+
+    if "focus" in tokens:
+        for key, val in tokens["focus"].items():
+            css_key = key.replace("_", "-")
+            lines.append(f"  --focus-{css_key}: {val}px;")
+
     lines.append("}")
     lines.append("")
 
@@ -292,6 +305,27 @@ def generate_swift(tokens: dict) -> str:
             )
         lines.append("    }")
 
+    if "font_family" in tokens:
+        lines.append("    enum FontFamily {")
+        for key, val in tokens["font_family"].items():
+            swift_key = _to_camel_case(key)
+            lines.append(f'        static let {swift_key}: String = "{val}"')
+        lines.append("    }")
+
+    if "font_weight" in tokens:
+        lines.append("    enum FontWeight {")
+        for key, val in tokens["font_weight"].items():
+            swift_key = _to_camel_case(key)
+            lines.append(f"        static let {swift_key}: Int = {val}")
+        lines.append("    }")
+
+    if "focus" in tokens:
+        lines.append("    enum Focus {")
+        for key, val in tokens["focus"].items():
+            swift_key = _to_camel_case(key)
+            lines.append(f"        static let {swift_key}: CGFloat = {val}")
+        lines.append("    }")
+
     lines.append("}")
     lines.append("")
     return "\n".join(lines)
@@ -357,6 +391,27 @@ def generate_kotlin(tokens: dict) -> str:
             lines.append(f"        const val {kt_key}: Int = {val}")
         lines.append("    }")
 
+    if "font_family" in tokens:
+        lines.append("    object FontFamily {")
+        for key, val in tokens["font_family"].items():
+            kt_key = key.upper()
+            lines.append(f'        const val {kt_key} = "{val}"')
+        lines.append("    }")
+
+    if "font_weight" in tokens:
+        lines.append("    object FontWeight {")
+        for key, val in tokens["font_weight"].items():
+            kt_key = key.upper()
+            lines.append(f"        const val {kt_key} = {val}")
+        lines.append("    }")
+
+    if "focus" in tokens:
+        lines.append("    object Focus {")
+        for key, val in tokens["focus"].items():
+            kt_key = _to_camel_case(key)
+            lines.append(f"        val {kt_key} = {val}.dp")
+        lines.append("    }")
+
     lines.append("}")
     lines.append("")
     return "\n".join(lines)
@@ -386,7 +441,10 @@ def generate_cpp(tokens: dict) -> str:
         lines.append(f"namespace {ns} {{")
         for key, val in values.items():
             cpp_key = key.upper()
-            lines.append(f"    constexpr int {cpp_key} = {val};")
+            if isinstance(val, str):
+                lines.append(f'    constexpr const char* {cpp_key} = "{val}";')
+            else:
+                lines.append(f"    constexpr int {cpp_key} = {val};")
         lines.append(f"}} // namespace {ns}")
 
     lines.append("} // namespace Tokens")
@@ -420,7 +478,10 @@ def generate_csharp(tokens: dict) -> str:
         lines.append("    {")
         for key, val in values.items():
             cs_key = _to_pascal_case(key)
-            lines.append(f"        public const double {cs_key} = {val};")
+            if isinstance(val, str):
+                lines.append(f'        public const string {cs_key} = "{val}";')
+            else:
+                lines.append(f"        public const double {cs_key} = {val};")
         lines.append("    }")
 
     lines.append("}")
@@ -479,6 +540,27 @@ def generate_rust(tokens: dict) -> str:
     for key, val in motion.items():
         lines.append(f"                {key}: {val},")
     lines.append("            },")
+
+    font_family = tokens.get("font_family", {})
+    if font_family:
+        lines.append("            font_family: FontFamilyTokens {")
+        for key, val in font_family.items():
+            lines.append(f'                {key}: "{val}".to_string(),')
+        lines.append("            },")
+
+    font_weight = tokens.get("font_weight", {})
+    if font_weight:
+        lines.append("            font_weight: FontWeightTokens {")
+        for key, val in font_weight.items():
+            lines.append(f"                {key}: {val},")
+        lines.append("            },")
+
+    focus = tokens.get("focus", {})
+    if focus:
+        lines.append("            focus: FocusTokens {")
+        for key, val in focus.items():
+            lines.append(f"                {key}: {val},")
+        lines.append("            },")
 
     lines.append("        }")
     lines.append("    }")

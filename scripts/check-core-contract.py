@@ -120,6 +120,19 @@ RUST_DESIGN_TOKEN_DEFAULTS = {
         "exit_duration_ms": 150,
         "emphasis_duration_ms": 300,
     },
+    "font_family": {
+        "display": "Bricolage Grotesque",
+        "body": "Hanken Grotesk",
+        "mono": "JetBrains Mono",
+    },
+    "font_weight": {
+        "regular": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700,
+        "extrabold": 800,
+    },
+    "focus": {"ring_width": 3, "ring_offset": 2},
 }
 
 # Token categories in tokens.json that exist in CSS/ANSI but not yet in Rust.
