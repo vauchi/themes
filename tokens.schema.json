@@ -44,14 +44,24 @@
     },
     "typography": {
       "type": "object",
-      "description": "Font size tokens for text hierarchy.",
+      "description": "Font size and line-height tokens for text hierarchy.",
       "required": ["title_size", "subtitle_size", "body_size", "caption_size"],
       "additionalProperties": false,
       "properties": {
         "title_size": { "type": "integer", "minimum": 1 },
         "subtitle_size": { "type": "integer", "minimum": 1 },
         "body_size": { "type": "integer", "minimum": 1 },
-        "caption_size": { "type": "integer", "minimum": 1 }
+        "caption_size": { "type": "integer", "minimum": 1 },
+        "caption_sm": { "type": "integer", "minimum": 1 },
+        "title_lg": { "type": "integer", "minimum": 1 },
+        "display": { "type": "integer", "minimum": 1 },
+        "medium_size": { "type": "integer", "minimum": 1 },
+        "title_line": { "type": "integer", "minimum": 1 },
+        "subtitle_line": { "type": "integer", "minimum": 1 },
+        "medium_line": { "type": "integer", "minimum": 1 },
+        "body_line": { "type": "integer", "minimum": 1 },
+        "caption_line": { "type": "integer", "minimum": 1 },
+        "text_scale_percent": { "type": "integer", "minimum": 50 }
       }
     },
     "border_radius": {
@@ -62,7 +72,11 @@
       "properties": {
         "sm": { "type": "integer", "minimum": 0 },
         "md": { "type": "integer", "minimum": 0 },
-        "lg": { "type": "integer", "minimum": 0 }
+        "md_lg": { "type": "integer", "minimum": 0 },
+        "lg": { "type": "integer", "minimum": 0 },
+        "chip": { "type": "integer", "minimum": 0 },
+        "card": { "type": "integer", "minimum": 0 },
+        "sheet": { "type": "integer", "minimum": 0 }
       }
     },
     "touch_target": {
