@@ -30,7 +30,8 @@
       "ui-tint-orange": "#3c2d27",
       "ui-tint-danger": "#3b202f",
       "ui-tint-green": "#223033",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -60,7 +61,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -94,7 +97,8 @@
       "ui-tint-orange": "#feebd9",
       "ui-tint-danger": "#f8e0e0",
       "ui-tint-green": "#e1eee2",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#FFFFFF"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -124,7 +128,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -159,7 +165,8 @@
       "ui-tint-orange": "#3f343b",
       "ui-tint-danger": "#3e2e40",
       "ui-tint-green": "#323c3f",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -189,7 +196,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -224,7 +233,8 @@
       "ui-tint-orange": "#f1dcd2",
       "ui-tint-danger": "#ebcfd9",
       "ui-tint-green": "#d5e5d7",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#FFFFFF"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -254,7 +264,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -289,7 +301,8 @@
       "ui-tint-orange": "#4d444d",
       "ui-tint-danger": "#4b404f",
       "ui-tint-green": "#424c50",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -319,7 +332,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -354,7 +369,8 @@
       "ui-tint-orange": "#433a44",
       "ui-tint-danger": "#423548",
       "ui-tint-green": "#384248",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -384,7 +400,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -419,7 +437,8 @@
       "ui-tint-orange": "#483f3e",
       "ui-tint-danger": "#48303b",
       "ui-tint-green": "#2e4940",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{background}",
@@ -449,7 +468,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{purple}"
     }
   },
   {
@@ -484,7 +505,8 @@
       "ui-tint-orange": "#4a4b4b",
       "ui-tint-danger": "#443b46",
       "ui-tint-green": "#40494b",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{polar-night-0}",
@@ -514,7 +536,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{frost-2}"
     }
   },
   {
@@ -549,7 +573,8 @@
       "ui-tint-orange": "#1b392e",
       "ui-tint-danger": "#212c35",
       "ui-tint-green": "#143c2e",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base03}",
@@ -579,7 +604,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -614,7 +641,8 @@
       "ui-tint-orange": "#f2e6c1",
       "ui-tint-danger": "#f8d9c8",
       "ui-tint-green": "#ebe8c1",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{base3}",
@@ -644,7 +672,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   },
   {
@@ -679,7 +709,8 @@
       "ui-tint-orange": "#483e29",
       "ui-tint-danger": "#482d2a",
       "ui-tint-green": "#3e3e28",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{bg0}",
@@ -709,7 +740,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{aqua}"
     }
   },
   {
@@ -744,7 +777,8 @@
       "ui-tint-orange": "#f6e4ae",
       "ui-tint-danger": "#f4d2ae",
       "ui-tint-green": "#ece4ad",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{bg0}",
@@ -774,7 +808,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{aqua}"
     }
   },
   {
@@ -808,7 +844,8 @@
       "ui-tint-orange": "#262600",
       "ui-tint-danger": "#260000",
       "ui-tint-green": "#002600",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#0A0A0A"
     },
     "semantic": {
       "bg-primary": "{black}",
@@ -838,7 +875,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{yellow}"
     }
   },
   {
@@ -872,7 +911,8 @@
       "ui-tint-orange": "#f0e8d9",
       "ui-tint-danger": "#f7d9d9",
       "ui-tint-green": "#d9e8d9",
-      "ui-scrim": "#00000080"
+      "ui-scrim": "#00000080",
+      "ui-on-accent": "#FFFFFF"
     },
     "semantic": {
       "bg-primary": "{white}",
@@ -902,7 +942,9 @@
       "tint-orange": "{ui-tint-orange}",
       "tint-danger": "{ui-tint-danger}",
       "tint-green": "{ui-tint-green}",
-      "scrim": "{ui-scrim}"
+      "scrim": "{ui-scrim}",
+      "text-on-accent": "{ui-on-accent}",
+      "focus-ring": "{blue}"
     }
   }
 ]

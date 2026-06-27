@@ -66,6 +66,9 @@ KNOWN_OPTIONAL_COLOR_TOKENS = {
     "tint-danger",
     "tint-green",
     "scrim",
+    # ADR-038 Amendment 3 (2026-06-27): v2 inclusive-redesign roles.
+    "text-on-accent",
+    "focus-ring",
 }
 
 # 6-digit hex; 8-digit (#rrggbbaa) allowed for alpha tokens (scrim) per

@@ -167,6 +167,21 @@ def validate_contrast(themes: list, strict: bool = False) -> list[str]:
                             f"({label})"
                         )
 
+            # ADR-038 Amendment 3 (2026-06-27): text-on-accent is the
+            # foreground on an accent-FILLED control, so it is measured
+            # against the accent fill, not bg-primary (AA normal text
+            # 4.5:1). focus-ring refs {accent} and is already covered by
+            # the accent >= 3:1 check above — no separate row until a theme
+            # mints a divergent ui-focus-ring primitive.
+            if "text-on-accent" in colors:
+                ratio_toa = contrast_ratio(colors["text-on-accent"], colors["accent"])
+                if ratio_toa < 4.5:
+                    errors.append(
+                        f"[{tid}] text-on-accent ({colors['text-on-accent']}) on accent "
+                        f"({colors['accent']}): contrast {ratio_toa:.2f}:1 < 4.5:1 "
+                        f"(WCAG AA fail)"
+                    )
+
     return errors
 
 
