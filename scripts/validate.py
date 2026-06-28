@@ -182,6 +182,26 @@ def validate_contrast(themes: list, strict: bool = False) -> list[str]:
                         f"(WCAG AA fail)"
                     )
 
+            # ADR-038 Amendment 4 (2026-06-28): status-text foregrounds are
+            # rendered on their status TINT background (banner/card), so each
+            # is measured against its tint, not bg-primary (AA normal text
+            # 4.5:1; the tint is the harder reference than the card surface).
+            status_text_refs = [
+                ("status-text-success", "tint-green"),
+                ("status-text-warning", "tint-orange"),
+                ("status-text-error", "tint-danger"),
+                ("status-text-info", "tint-accent"),
+            ]
+            for token, tint in status_text_refs:
+                if token in colors and tint in colors:
+                    ratio_st = contrast_ratio(colors[token], colors[tint])
+                    if ratio_st < 4.5:
+                        errors.append(
+                            f"[{tid}] {token} ({colors[token]}) on {tint} "
+                            f"({colors[tint]}): contrast {ratio_st:.2f}:1 < 4.5:1 "
+                            f"(WCAG AA fail)"
+                        )
+
     return errors
 
 

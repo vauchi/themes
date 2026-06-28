@@ -31,7 +31,11 @@
       "ui-tint-danger": "#3b202f",
       "ui-tint-green": "#223033",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#4caf50",
+      "ui-status-text-warning": "#ff9800",
+      "ui-status-text-error": "#f65d52",
+      "ui-status-text-info": "#4fc3f7"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -63,7 +67,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -98,7 +106,11 @@
       "ui-tint-danger": "#f8e0e0",
       "ui-tint-green": "#e1eee2",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#FFFFFF"
+      "ui-on-accent": "#FFFFFF",
+      "ui-status-text-success": "#2f7732",
+      "ui-status-text-warning": "#a75500",
+      "ui-status-text-error": "#c12b2b",
+      "ui-status-text-info": "#1668ba"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -130,7 +142,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -166,7 +182,11 @@
       "ui-tint-danger": "#3e2e40",
       "ui-tint-green": "#323c3f",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#a6e3a1",
+      "ui-status-text-warning": "#fab387",
+      "ui-status-text-error": "#f38ba8",
+      "ui-status-text-info": "#89b4fa"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -198,7 +218,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -234,7 +258,11 @@
       "ui-tint-danger": "#ebcfd9",
       "ui-tint-green": "#d5e5d7",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#FFFFFF"
+      "ui-on-accent": "#FFFFFF",
+      "ui-status-text-success": "#2d711e",
+      "ui-status-text-warning": "#a84207",
+      "ui-status-text-error": "#b80d32",
+      "ui-status-text-info": "#1a57d0"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -266,7 +294,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -302,7 +334,11 @@
       "ui-tint-danger": "#4b404f",
       "ui-tint-green": "#424c50",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#a6d189",
+      "ui-status-text-warning": "#f0a47e",
+      "ui-status-text-error": "#ec9d9e",
+      "ui-status-text-info": "#9cb6f0"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -334,7 +370,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -370,7 +410,11 @@
       "ui-tint-danger": "#423548",
       "ui-tint-green": "#384248",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#a6da95",
+      "ui-status-text-warning": "#f5a97f",
+      "ui-status-text-error": "#ed8796",
+      "ui-status-text-info": "#8aadf4"
     },
     "semantic": {
       "bg-primary": "{base}",
@@ -402,7 +446,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -438,7 +486,11 @@
       "ui-tint-danger": "#48303b",
       "ui-tint-green": "#2e4940",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#50fa7b",
+      "ui-status-text-warning": "#ffb86c",
+      "ui-status-text-error": "#ff7676",
+      "ui-status-text-info": "#bf95f9"
     },
     "semantic": {
       "bg-primary": "{background}",
@@ -470,7 +522,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{purple}"
+      "focus-ring": "{purple}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -506,7 +562,11 @@
       "ui-tint-danger": "#443b46",
       "ui-tint-green": "#40494b",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#a5bf8e",
+      "ui-status-text-warning": "#ebcb8b",
+      "ui-status-text-error": "#d69aa0",
+      "ui-status-text-info": "#88c0d0"
     },
     "semantic": {
       "bg-primary": "{polar-night-0}",
@@ -538,7 +598,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{frost-2}"
+      "focus-ring": "{frost-2}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -574,7 +638,11 @@
       "ui-tint-danger": "#212c35",
       "ui-tint-green": "#143c2e",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#96a724",
+      "ui-status-text-warning": "#be9820",
+      "ui-status-text-error": "#e66d6b",
+      "ui-status-text-info": "#57a5dc"
     },
     "semantic": {
       "bg-primary": "{base03}",
@@ -606,7 +674,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -642,7 +714,11 @@
       "ui-tint-danger": "#f8d9c8",
       "ui-tint-green": "#ebe8c1",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#5f6d00",
+      "ui-status-text-warning": "#816200",
+      "ui-status-text-error": "#b92a28",
+      "ui-status-text-info": "#1d699f"
     },
     "semantic": {
       "bg-primary": "{base3}",
@@ -674,7 +750,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -710,7 +790,11 @@
       "ui-tint-danger": "#482d2a",
       "ui-tint-green": "#3e3e28",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#b8bb26",
+      "ui-status-text-warning": "#fabd2f",
+      "ui-status-text-error": "#fc7362",
+      "ui-status-text-info": "#8cab9f"
     },
     "semantic": {
       "bg-primary": "{bg0}",
@@ -742,7 +826,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{aqua}"
+      "focus-ring": "{aqua}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -778,7 +866,11 @@
       "ui-tint-danger": "#f4d2ae",
       "ui-tint-green": "#ece4ad",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#686712",
+      "ui-status-text-warning": "#855e14",
+      "ui-status-text-error": "#b5201a",
+      "ui-status-text-info": "#37696c"
     },
     "semantic": {
       "bg-primary": "{bg0}",
@@ -810,7 +902,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{aqua}"
+      "focus-ring": "{aqua}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -845,7 +941,11 @@
       "ui-tint-danger": "#260000",
       "ui-tint-green": "#002600",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#0A0A0A"
+      "ui-on-accent": "#0A0A0A",
+      "ui-status-text-success": "#00ff00",
+      "ui-status-text-warning": "#ffff00",
+      "ui-status-text-error": "#ff0000",
+      "ui-status-text-info": "#ffff00"
     },
     "semantic": {
       "bg-primary": "{black}",
@@ -877,7 +977,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{yellow}"
+      "focus-ring": "{yellow}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   },
   {
@@ -912,7 +1016,11 @@
       "ui-tint-danger": "#f7d9d9",
       "ui-tint-green": "#d9e8d9",
       "ui-scrim": "#00000080",
-      "ui-on-accent": "#FFFFFF"
+      "ui-on-accent": "#FFFFFF",
+      "ui-status-text-success": "#006600",
+      "ui-status-text-warning": "#8d5e00",
+      "ui-status-text-error": "#c80000",
+      "ui-status-text-info": "#0000cc"
     },
     "semantic": {
       "bg-primary": "{white}",
@@ -944,7 +1052,11 @@
       "tint-green": "{ui-tint-green}",
       "scrim": "{ui-scrim}",
       "text-on-accent": "{ui-on-accent}",
-      "focus-ring": "{blue}"
+      "focus-ring": "{blue}",
+      "status-text-success": "{ui-status-text-success}",
+      "status-text-warning": "{ui-status-text-warning}",
+      "status-text-error": "{ui-status-text-error}",
+      "status-text-info": "{ui-status-text-info}"
     }
   }
 ]

@@ -69,6 +69,11 @@ KNOWN_OPTIONAL_COLOR_TOKENS = {
     # ADR-038 Amendment 3 (2026-06-27): v2 inclusive-redesign roles.
     "text-on-accent",
     "focus-ring",
+    # ADR-038 Amendment 4 (2026-06-28): AA-safe status-text foregrounds.
+    "status-text-success",
+    "status-text-warning",
+    "status-text-error",
+    "status-text-info",
 }
 
 # 6-digit hex; 8-digit (#rrggbbaa) allowed for alpha tokens (scrim) per
