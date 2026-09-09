@@ -81,7 +81,7 @@
     },
     "touch_target": {
       "type": "object",
-      "description": "Minimum touch target sizes (WCAG 2.5.8).",
+      "description": "Minimum touch target sizes. One value for every platform, so it has to clear the highest floor: Apple asks 44 pt, Material asks 48 dp. WCAG 2.5.8 asks only 24, and 2.5.5 asks 44.",
       "required": ["minimum"],
       "additionalProperties": false,
       "properties": {

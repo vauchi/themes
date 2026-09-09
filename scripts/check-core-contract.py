@@ -122,7 +122,7 @@ RUST_DESIGN_TOKEN_DEFAULTS = {
         "card": 20,
         "sheet": 28,
     },
-    "touch_target": {"minimum": 44},
+    "touch_target": {"minimum": 48},
     "motion": {
         "enter_duration_ms": 200,
         "exit_duration_ms": 150,
