@@ -207,6 +207,11 @@ def generate_css(tokens: dict, themes: list[dict]) -> str:
             css_key = key.replace("_", "-")
             lines.append(f"  --focus-{css_key}: {val}px;")
 
+    if "avatar" in tokens:
+        for key, val in tokens["avatar"].items():
+            css_key = key.replace("_", "-")
+            lines.append(f"  --avatar-{css_key}: {val};")
+
     lines.append("}")
     lines.append("")
 
@@ -326,6 +331,13 @@ def generate_swift(tokens: dict) -> str:
             lines.append(f"        static let {swift_key}: CGFloat = {val}")
         lines.append("    }")
 
+    if "avatar" in tokens:
+        lines.append("    enum Avatar {")
+        for key, val in tokens["avatar"].items():
+            swift_key = _to_camel_case(key)
+            lines.append(f'        static let {swift_key}: String = "{val}"')
+        lines.append("    }")
+
     lines.append("}")
     lines.append("")
     return "\n".join(lines)
@@ -410,6 +422,13 @@ def generate_kotlin(tokens: dict) -> str:
         for key, val in tokens["focus"].items():
             kt_key = _to_camel_case(key)
             lines.append(f"        val {kt_key} = {val}.dp")
+        lines.append("    }")
+
+    if "avatar" in tokens:
+        lines.append("    object Avatar {")
+        for key, val in tokens["avatar"].items():
+            kt_key = key.upper()
+            lines.append(f'        const val {kt_key} = "{val}"')
         lines.append("    }")
 
     lines.append("}")
@@ -560,6 +579,13 @@ def generate_rust(tokens: dict) -> str:
         lines.append("            focus: FocusTokens {")
         for key, val in focus.items():
             lines.append(f"                {key}: {val},")
+        lines.append("            },")
+
+    avatar = tokens.get("avatar", {})
+    if avatar:
+        lines.append("            avatar: AvatarTokens {")
+        for key, val in avatar.items():
+            lines.append(f'                {key}: "{val}".to_string(),')
         lines.append("            },")
 
     lines.append("        }")

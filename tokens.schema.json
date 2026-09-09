@@ -129,6 +129,15 @@
         "ring_width": { "type": "integer", "minimum": 0 },
         "ring_offset": { "type": "integer", "minimum": 0 }
       }
+    },
+    "avatar": {
+      "type": "object",
+      "description": "Avatar rendering constants. fallback_bg is the theme-invariant background drawn behind initials when a contact carries no bg_color of its own.",
+      "required": ["fallback_bg"],
+      "additionalProperties": false,
+      "properties": {
+        "fallback_bg": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+      }
     }
   }
 }

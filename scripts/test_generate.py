@@ -239,6 +239,11 @@ class TestGenerateCSS(unittest.TestCase):
         css = generate_css(tokens, [])
         self.assertIn("SPDX-License-Identifier", css)
 
+    def test_css_carries_avatar_fallback_bg_as_a_bare_colour(self):
+        tokens = {"version": "2.0.0", "avatar": {"fallback_bg": "#4682B4"}}
+        css = generate_css(tokens, [])
+        self.assertIn("--avatar-fallback-bg: #4682B4;", css)
+
 
 class TestGenerateANSI(unittest.TestCase):
     """Test ANSI 256 color mapping."""
