@@ -23,3 +23,24 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 path = ["**/CLAUDE.md"]
 SPDX-FileCopyrightText = "2026 Mattia Egloff <mattia.egloff@pm.me>"
 SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Brand font files (SIL Open Font License 1.1), verbatim from Google Fonts
+[[annotations]]
+path = ["fonts/BricolageGrotesque*.ttf"]
+SPDX-FileCopyrightText = "2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = ["fonts/HankenGrotesk*.ttf"]
+SPDX-FileCopyrightText = "2021 The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk)"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = ["fonts/JetBrainsMono*.ttf"]
+SPDX-FileCopyrightText = "2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = ["LICENSES/OFL-1.1.txt"]
+SPDX-FileCopyrightText = "SIL International"
+SPDX-License-Identifier = "OFL-1.1"
