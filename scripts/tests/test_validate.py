@@ -28,6 +28,9 @@ AA_GREY = "#767676"
 # Clears the 3:1 UI threshold on black (3.66:1) but not AA's 4.5:1, so it
 # tells the two thresholds apart.
 UI_GREY = "#666666"
+# The same discriminator measured against white (3.64:1), for the tokens
+# whose reference is a light fill rather than a dark background.
+UI_GREY_ON_WHITE = "#868686"
 
 
 def theme(tid="t", mode="dark", **semantic_overrides) -> dict:
@@ -226,6 +229,30 @@ class ContrastGate(unittest.TestCase):
 
         self.assertEqual(len(validate.validate_contrast([unreadable], strict=False)), 1)
 
+    def test_primary_text_is_held_to_body_contrast_not_the_ui_threshold(self):
+        """A colour that clears 3:1 but not 4.5:1 must still be rejected.
+
+        Body text and UI components have different bars; a fixture that
+        fails both cannot tell them apart.
+        """
+        ratio = validate.contrast_ratio(UI_GREY, BLACK)
+        self.assertGreater(ratio, 3.0)
+        self.assertLess(ratio, 4.5)
+
+        errors = validate.validate_contrast([theme("a", **{"text-primary": UI_GREY})])
+
+        self.assertEqual(len(errors), 1)
+        self.assertIn("< 4.5:1 (WCAG AA fail)", errors[0])
+
+    def test_secondary_text_is_held_to_body_contrast_not_the_ui_threshold(self):
+        errors = validate.validate_contrast(
+            [theme("a", **{"text-secondary": UI_GREY})], strict=True
+        )
+
+        self.assertEqual(len(errors), 1)
+        self.assertIn("text-secondary", errors[0])
+        self.assertIn("< 4.5:1 (WCAG AA fail)", errors[0])
+
     def test_secondary_text_is_only_checked_under_strict(self):
         dim = theme("a", **{"text-secondary": "#111111"})
 
@@ -309,15 +336,20 @@ class OptionalTokenThresholds(unittest.TestCase):
 
     def test_text_on_accent_is_measured_against_the_accent_fill_not_the_background(self):
         """Amendment 3: it is the foreground on an accent-FILLED control."""
-        # White on a black background would pass; against a white accent
-        # fill it must not.
-        failing = theme("a", accent=WHITE, **{"text-on-accent": WHITE})
+        # A grey that clears 3:1 on the white accent fill but not 4.5:1,
+        # so the bar being enforced is pinned, not merely its existence.
+        # It would pass comfortably against the black background.
+        failing = theme("a", accent=WHITE, **{"text-on-accent": UI_GREY_ON_WHITE})
+        self.assertGreater(validate.contrast_ratio(UI_GREY_ON_WHITE, WHITE), 3.0)
+        self.assertGreater(validate.contrast_ratio(UI_GREY_ON_WHITE, BLACK), 4.5)
 
         errors = validate.validate_contrast([failing], strict=True)
 
         self.assertEqual(len(errors), 1)
-        self.assertIn("text-on-accent (#ffffff) on accent (#ffffff)", errors[0])
-        self.assertIn("1.00:1 < 4.5:1", errors[0])
+        self.assertIn(
+            f"text-on-accent ({UI_GREY_ON_WHITE}) on accent (#ffffff)", errors[0]
+        )
+        self.assertIn("< 4.5:1", errors[0])
 
     def test_text_on_accent_passes_when_it_contrasts_with_the_fill(self):
         passing = theme("a", accent=WHITE, **{"text-on-accent": BLACK})
@@ -326,16 +358,20 @@ class OptionalTokenThresholds(unittest.TestCase):
 
     def test_each_status_text_is_measured_against_its_own_tint(self):
         """Amendment 4: the tint is the harder reference than the card."""
+        # Clears 3:1 on the tint but not 4.5:1, and would pass against
+        # bg-primary — so this pins both the reference and the bar.
         failing = theme(
             "a",
-            **{"status-text-success": "#00ff00", "tint-green": "#00ff00"},
+            **{"status-text-success": UI_GREY_ON_WHITE, "tint-green": WHITE},
         )
 
         errors = validate.validate_contrast([failing], strict=True)
 
         self.assertEqual(len(errors), 1)
-        self.assertIn("status-text-success (#00ff00) on tint-green", errors[0])
-        self.assertIn("1.00:1 < 4.5:1", errors[0])
+        self.assertIn(
+            f"status-text-success ({UI_GREY_ON_WHITE}) on tint-green", errors[0]
+        )
+        self.assertIn("< 4.5:1", errors[0])
 
     def test_a_status_text_without_its_tint_is_not_checked(self):
         no_tint = theme("a", **{"status-text-success": "#00ff00"})
