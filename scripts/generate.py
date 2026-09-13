@@ -630,9 +630,9 @@ def main() -> int:
         print(f"ERROR: {themes_path} not found")
         return 1
 
-    with open(tokens_path) as f:
+    with open(tokens_path, encoding="utf-8") as f:
         tokens = json.load(f)
-    with open(themes_path) as f:
+    with open(themes_path, encoding="utf-8") as f:
         themes = json.load(f)
 
     print(f"Loaded {len(themes)} themes, tokens v{tokens.get('version', '?')}")
@@ -651,7 +651,7 @@ def main() -> int:
     # Generate flat themes (backward-compatible)
     flat_themes = generate_flat_themes(themes, tokens)
     flat_path = out_dir / "themes.json"
-    with open(flat_path, "w") as f:
+    with open(flat_path, "w", encoding="utf-8") as f:
         json.dump(flat_themes, f, indent=2)
         f.write("\n")
     print(f"  -> {flat_path} ({len(flat_themes)} themes)")
@@ -659,14 +659,14 @@ def main() -> int:
     # Generate CSS
     css_content = generate_css(tokens, themes)
     css_path = out_dir / "tokens.css"
-    with open(css_path, "w") as f:
+    with open(css_path, "w", encoding="utf-8") as f:
         f.write(css_content)
     print(f"  -> {css_path}")
 
     # Generate ANSI mapping
     ansi_themes = generate_ansi(themes)
     ansi_path = out_dir / "tokens_ansi.json"
-    with open(ansi_path, "w") as f:
+    with open(ansi_path, "w", encoding="utf-8") as f:
         json.dump(ansi_themes, f, indent=2)
         f.write("\n")
     print(f"  -> {ansi_path} ({len(ansi_themes)} themes)")
@@ -674,35 +674,35 @@ def main() -> int:
     # Generate Swift tokens
     swift_content = generate_swift(tokens)
     swift_path = out_dir / "Tokens.swift"
-    with open(swift_path, "w") as f:
+    with open(swift_path, "w", encoding="utf-8") as f:
         f.write(swift_content)
     print(f"  -> {swift_path}")
 
     # Generate Kotlin tokens
     kotlin_content = generate_kotlin(tokens)
     kotlin_path = out_dir / "Tokens.kt"
-    with open(kotlin_path, "w") as f:
+    with open(kotlin_path, "w", encoding="utf-8") as f:
         f.write(kotlin_content)
     print(f"  -> {kotlin_path}")
 
     # Generate C++ tokens
     cpp_content = generate_cpp(tokens)
     cpp_path = out_dir / "Tokens.h"
-    with open(cpp_path, "w") as f:
+    with open(cpp_path, "w", encoding="utf-8") as f:
         f.write(cpp_content)
     print(f"  -> {cpp_path}")
 
     # Generate C# tokens
     cs_content = generate_csharp(tokens)
     cs_path = out_dir / "Tokens.cs"
-    with open(cs_path, "w") as f:
+    with open(cs_path, "w", encoding="utf-8") as f:
         f.write(cs_content)
     print(f"  -> {cs_path}")
 
     # Generate Rust Default impl
     rust_content = generate_rust(tokens)
     rust_path = out_dir / "tokens_defaults.rs"
-    with open(rust_path, "w") as f:
+    with open(rust_path, "w", encoding="utf-8") as f:
         f.write(rust_content)
     # Run rustfmt if available (keeps generated code consistent with project style)
     import subprocess

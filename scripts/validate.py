@@ -218,7 +218,7 @@ def main() -> int:
         print(f"ERROR: {themes_path} not found")
         return 1
 
-    with open(themes_path) as f:
+    with open(themes_path, encoding="utf-8") as f:
         themes = json.load(f)
 
     print(f"Loaded {len(themes)} themes from {themes_path}")
@@ -227,7 +227,7 @@ def main() -> int:
 
     # Schema validation
     if schema_path.exists():
-        with open(schema_path) as f:
+        with open(schema_path, encoding="utf-8") as f:
             schema = json.load(f)
         all_errors.extend(validate_schema(themes, schema))
     else:

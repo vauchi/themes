@@ -290,10 +290,10 @@ def main() -> int:
 
     # --- Theme contract ---
     if generated_path.exists():
-        with open(generated_path) as f:
+        with open(generated_path, encoding="utf-8") as f:
             themes = json.load(f)
     elif themes_path.exists():
-        with open(themes_path) as f:
+        with open(themes_path, encoding="utf-8") as f:
             raw = json.load(f)
         themes = resolve_v2_themes(raw)
     else:
@@ -308,7 +308,7 @@ def main() -> int:
 
     # --- Token contract ---
     if tokens_path.exists():
-        with open(tokens_path) as f:
+        with open(tokens_path, encoding="utf-8") as f:
             tokens = json.load(f)
 
         mirrored = len(RUST_DESIGN_TOKEN_DEFAULTS)

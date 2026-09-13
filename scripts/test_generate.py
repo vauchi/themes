@@ -173,7 +173,7 @@ class TestMigrationIdentity(unittest.TestCase):
         if not themes_path.exists():
             self.skipTest("themes.json not found")
 
-        with open(themes_path) as f:
+        with open(themes_path, encoding="utf-8") as f:
             themes = json.load(f)
 
         themes_by_id = {t["id"]: t for t in themes}
@@ -306,9 +306,9 @@ class TestEndToEnd(unittest.TestCase):
         if not tokens_path.exists() or not themes_path.exists():
             self.skipTest("Source files not found")
 
-        with open(tokens_path) as f:
+        with open(tokens_path, encoding="utf-8") as f:
             tokens = json.load(f)
-        with open(themes_path) as f:
+        with open(themes_path, encoding="utf-8") as f:
             themes = json.load(f)
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -317,7 +317,7 @@ class TestEndToEnd(unittest.TestCase):
             # Generate flat themes
             flat = generate_flat_themes(themes, tokens)
             flat_path = out_dir / "themes.json"
-            with open(flat_path, "w") as f:
+            with open(flat_path, "w", encoding="utf-8") as f:
                 json.dump(flat, f, indent=2)
             self.assertTrue(flat_path.exists())
             self.assertEqual(len(flat), 14)
@@ -325,7 +325,7 @@ class TestEndToEnd(unittest.TestCase):
             # Generate CSS
             css = generate_css(tokens, themes)
             css_path = out_dir / "tokens.css"
-            with open(css_path, "w") as f:
+            with open(css_path, "w", encoding="utf-8") as f:
                 f.write(css)
             self.assertTrue(css_path.exists())
             self.assertGreater(len(css), 100)
@@ -333,7 +333,7 @@ class TestEndToEnd(unittest.TestCase):
             # Generate ANSI
             ansi = generate_ansi(themes)
             ansi_path = out_dir / "tokens_ansi.json"
-            with open(ansi_path, "w") as f:
+            with open(ansi_path, "w", encoding="utf-8") as f:
                 json.dump(ansi, f, indent=2)
             self.assertTrue(ansi_path.exists())
             self.assertEqual(len(ansi), 14)
