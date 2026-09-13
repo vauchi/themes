@@ -59,6 +59,11 @@ validate:themes:
     - job: lint:json
       optional: true
   script:
+    # validate.py treats jsonschema as optional and merely warns when it
+    # is absent, which silently disables the schema gate. Install it and
+    # fail loudly if it did not land, rather than passing on a skip.
+    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
+    - python3 -c "import jsonschema"
     - python3 scripts/validate.py
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -76,6 +81,11 @@ validate:themes-strict:
     - job: lint:json
       optional: true
   script:
+    # validate.py treats jsonschema as optional and merely warns when it
+    # is absent, which silently disables the schema gate. Install it and
+    # fail loudly if it did not land, rather than passing on a skip.
+    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
+    - python3 -c "import jsonschema"
     - python3 scripts/validate.py --strict
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -84,6 +94,26 @@ validate:themes-strict:
         - themes.schema.json
         - scripts/validate.py
   allow_failure: false
+
+# The validator scripts are the repo's gates, so a regression in one reads
+# as a green pipeline rather than a failure. Their own tests run first.
+test:scripts:
+  stage: lint
+  tags:
+    - self-hosted
+    - node
+  needs: []
+  script:
+    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
+    - python3 -m unittest discover -s scripts/tests -t scripts/tests -v
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - "scripts/**/*"
+        - themes.json
+        - themes.schema.json
+        - tokens.json
+    - if: $CI_COMMIT_BRANCH == "main"
 
 # Run generator tests
 test:generator:
