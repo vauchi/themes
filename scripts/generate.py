@@ -588,6 +588,13 @@ def generate_rust(tokens: dict) -> str:
             lines.append(f'                {key}: "{val}".to_string(),')
         lines.append("            },")
 
+    image = tokens.get("image", {})
+    if image:
+        lines.append("            image: ImageTokens {")
+        for key, val in image.items():
+            lines.append(f"                {key}: {val},")
+        lines.append("            },")
+
     lines.append("        }")
     lines.append("    }")
     lines.append("}")

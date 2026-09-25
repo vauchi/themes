@@ -138,6 +138,15 @@
       "properties": {
         "fallback_bg": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
       }
+    },
+    "image": {
+      "type": "object",
+      "description": "Image sizing in logical units. hero_size is the square a screen's leading picture (the onboarding mark) is fitted into.",
+      "required": ["hero_size"],
+      "additionalProperties": false,
+      "properties": {
+        "hero_size": { "type": "integer", "minimum": 1, "maximum": 1024 }
+      }
     }
   }
 }

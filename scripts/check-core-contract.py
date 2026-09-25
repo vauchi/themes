@@ -142,6 +142,7 @@ RUST_DESIGN_TOKEN_DEFAULTS = {
     },
     "focus": {"ring_width": 3, "ring_offset": 2},
     "avatar": {"fallback_bg": "#4682B4"},
+    "image": {"hero_size": 88},
 }
 
 # Token categories in tokens.json that exist in CSS/ANSI but not yet in Rust.
