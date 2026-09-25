@@ -36,6 +36,22 @@ stages:
   - trigger
   - deploy
 
+# The validators need jsonschema. It goes into a job-local venv because
+# the macOS shell runner's Homebrew Python is externally managed (PEP 668)
+# and refuses a system-wide pip install, and the old `2>/dev/null || true`
+# install chain hid that refusal.
+.jsonschema-venv:
+  before_script:
+    - |
+      if command -v uv >/dev/null 2>&1; then
+        uv venv --quiet .venv
+        uv pip install --quiet --python .venv/bin/python jsonschema
+      else
+        python3 -m venv .venv
+        .venv/bin/python -m pip install --quiet jsonschema
+      fi
+    - export PATH="$CI_PROJECT_DIR/.venv/bin:$PATH"
+
 # Validate JSON syntax (fast gate — catches malformed files before Python)
 lint:json:
   stage: lint
@@ -51,6 +67,7 @@ lint:json:
         - themes.json
 
 validate:themes:
+  extends: .jsonschema-venv
   stage: validate
   tags:
     - self-hosted
@@ -62,7 +79,6 @@ validate:themes:
     # validate.py treats jsonschema as optional and merely warns when it
     # is absent, which silently disables the schema gate. Install it and
     # fail loudly if it did not land, rather than passing on a skip.
-    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
     - python3 -c "import jsonschema"
     - python3 scripts/validate.py
   rules:
@@ -73,6 +89,7 @@ validate:themes:
         - scripts/validate.py
 
 validate:themes-strict:
+  extends: .jsonschema-venv
   stage: validate
   tags:
     - self-hosted
@@ -84,7 +101,6 @@ validate:themes-strict:
     # validate.py treats jsonschema as optional and merely warns when it
     # is absent, which silently disables the schema gate. Install it and
     # fail loudly if it did not land, rather than passing on a skip.
-    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
     - python3 -c "import jsonschema"
     - python3 scripts/validate.py --strict
   rules:
@@ -98,13 +114,13 @@ validate:themes-strict:
 # The validator scripts are the repo's gates, so a regression in one reads
 # as a green pipeline rather than a failure. Their own tests run first.
 test:scripts:
+  extends: .jsonschema-venv
   stage: lint
   tags:
     - self-hosted
     - node
   needs: []
   script:
-    - uv pip install --system --quiet jsonschema 2>/dev/null || pip install jsonschema --quiet 2>/dev/null || true
     - python3 -m unittest discover -s scripts/tests -t scripts/tests -v
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
