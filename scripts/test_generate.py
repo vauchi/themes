@@ -17,6 +17,7 @@ from generate import (
     generate_ansi,
     generate_css,
     generate_flat_themes,
+    generate_rust,
     hex_to_rgb,
     resolve_theme,
 )
@@ -294,6 +295,14 @@ class TestAnsi256(unittest.TestCase):
         # Should be in grayscale ramp or cube, but must be valid
         self.assertGreaterEqual(idx, 0)
         self.assertLessEqual(idx, 255)
+
+
+class TestGenerateRust(unittest.TestCase):
+    def test_rust_defaults_carry_the_hero_image_size(self):
+        tokens = {"version": "2.0.0", "image": {"hero_size": 88}}
+        rust = generate_rust(tokens)
+        self.assertIn("image: ImageTokens {", rust)
+        self.assertIn("hero_size: 88,", rust)
 
 
 class TestEndToEnd(unittest.TestCase):

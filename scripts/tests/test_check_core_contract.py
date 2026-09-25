@@ -359,6 +359,15 @@ class ShippedData(unittest.TestCase):
             set(),
         )
 
+    # The onboarding welcome artboard draws the Vauchi mark at 88 x 88 on a
+    # 390-wide phone frame; Core sizes the Image node from this token
+    # (private problems/2026-09-13-device-walk-diverges-from-canvas).
+    def test_the_shipped_tokens_size_a_hero_image_as_the_welcome_artboard_does(self):
+        tokens = json.loads((REPO_ROOT / "tokens.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(tokens["image"], {"hero_size": 88})
+
 
 if __name__ == "__main__":
     unittest.main()
+
