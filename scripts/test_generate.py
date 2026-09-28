@@ -33,7 +33,8 @@ ORIGINAL_V1_COLORS = {
         "accent": "#4fc3f7",
         "accent-dark": "#0288d1",
         "success": "#4caf50",
-        "error": "#f44336",
+        # Deliberately left v1 for the canvas's Material 3 red (#411).
+        "error": "#f2b8b5",
         "warning": "#ff9800",
         "border": "#333333",
     },

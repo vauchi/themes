@@ -88,7 +88,19 @@ HEX_COLOR_PATTERN = r"^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$"
 # Update this when new token categories are added to tokens.json.
 
 RUST_DESIGN_TOKEN_DEFAULTS = {
-    "spacing": {"xs": 4, "sm": 8, "sm_md": 12, "md": 16, "lg": 24, "xl": 32},
+    "spacing": {
+        "xxs": 2,
+        "xs": 4,
+        "xs_sm": 6,
+        "sm": 8,
+        "sm_smd": 10,
+        "sm_md": 12,
+        "smd_md": 14,
+        "md": 16,
+        "md_lg": 20,
+        "lg": 24,
+        "xl": 32,
+    },
     "spacing_direction": {
         "content_start": 16,
         "content_end": 16,
@@ -114,6 +126,7 @@ RUST_DESIGN_TOKEN_DEFAULTS = {
         "text_scale_percent": 100,
     },
     "border_radius": {
+        "xs": 2,
         "sm": 4,
         "md": 8,
         "md_lg": 12,
@@ -121,6 +134,7 @@ RUST_DESIGN_TOKEN_DEFAULTS = {
         "chip": 12,
         "card": 20,
         "sheet": 28,
+        "pill": 999,
     },
     "touch_target": {"minimum": 48},
     "motion": {

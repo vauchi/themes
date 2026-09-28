@@ -15,7 +15,7 @@
       "blue": "#4fc3f7",
       "sapphire": "#0288d1",
       "green": "#4caf50",
-      "red": "#f44336",
+      "red": "#f2b8b5",
       "peach": "#ff9800",
       "border-gray": "#333333",
       "ui-surface": "#222236",
@@ -34,7 +34,7 @@
       "ui-on-accent": "#0A0A0A",
       "ui-status-text-success": "#4caf50",
       "ui-status-text-warning": "#ff9800",
-      "ui-status-text-error": "#f65d52",
+      "ui-status-text-error": "#f2b8b5",
       "ui-status-text-info": "#4fc3f7"
     },
     "semantic": {
@@ -90,7 +90,7 @@
       "blue": "#1976d2",
       "sapphire": "#0d47a1",
       "green": "#388e3c",
-      "red": "#d32f2f",
+      "red": "#b3261e",
       "peach": "#f57c00",
       "border-gray": "#e0e0e0",
       "ui-surface": "#f6f6f6",
@@ -109,7 +109,7 @@
       "ui-on-accent": "#FFFFFF",
       "ui-status-text-success": "#2f7732",
       "ui-status-text-warning": "#a75500",
-      "ui-status-text-error": "#c12b2b",
+      "ui-status-text-error": "#b3261e",
       "ui-status-text-info": "#1668ba"
     },
     "semantic": {
