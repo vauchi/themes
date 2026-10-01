@@ -222,6 +222,11 @@ trigger:core-validate:
   trigger:
     project: vauchi/core
     strategy: depend
+  # Core resolves its own VAUCHI_SCRIPTS_REF. Forwarding this repo's older
+  # pin ran core's jobs against scripts that lack core-pins.py, failing
+  # check:consumer-pins-bump on every content-triggered main pipeline (#465).
+  inherit:
+    variables: false
   variables:
     CONTENT_TRIGGER_REPO: themes
   rules:
